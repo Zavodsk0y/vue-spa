@@ -1,11 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import store from "@/store";
+import Login from "@/components/Login.vue";
+import Signup from "@/components/Signup.vue";
+import Logout from "@/components/Logout.vue";
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next('/');
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next('/login')
+}
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/about',
@@ -16,6 +37,23 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
     }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    beforeEnter: ifNotAuthenticated,
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: Signup,
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: Logout,
+    beforeEnter: ifAuthenticated
   }
 ]
 
