@@ -1,5 +1,5 @@
 <script>
-import SIGNUP_REQUEST from "@/store/index"
+import SIGNUP_REQUEST from "@/store"
 export default {
   name: "Signup",
   data() {
@@ -63,6 +63,7 @@ export default {
 .login input, button {
   border: 1px solid black;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 </style>

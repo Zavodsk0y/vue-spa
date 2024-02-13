@@ -26,6 +26,7 @@ export default {
 button {
   border: 1px solid black;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 </style>

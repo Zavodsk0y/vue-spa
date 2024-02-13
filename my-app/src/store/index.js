@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import {loginRequest, logoutRequest} from "@/utils/api";
+import {getProductsRequest, loginRequest, logoutRequest} from "@/utils/api";
 import { signupRequest } from "@/utils/api";
 import {toHandlerKey} from "vue";
 
@@ -9,6 +9,7 @@ export default createStore({
   },
   getters: {
     isAuthenticated: state => !!state.token,
+      getProducts: state => !!state.products,
   },
   mutations: {
     AUTH_SUCCESS: (state, token) => {
@@ -28,6 +29,9 @@ export default createStore({
     },
     LOGOUT_ERROR: (state, token)  => {
         state.token = token
+    },
+    SET_PRODUCTS: (state, products) => {
+        state.products = products
     }
   },
   actions: {
@@ -72,6 +76,16 @@ export default createStore({
                 .catch((error) => {
                     commit('LOGOUT_ERROR')
                     reject(error)
+                })
+        })
+    },
+    GET_PRODUCTS_REQUEST: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            getProductsRequest()
+                .then(result => commit('SET_PRODUCTS', result.data))
+                .catch(error => {
+                    commit('AUTH_ERROR', '')
+                    reject(error.message)
                 })
         })
     }

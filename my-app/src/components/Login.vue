@@ -1,6 +1,6 @@
 <script>
   import store from "@/store";
-  import AUTH_REQUEST from "@/store/index"
+  import AUTH_REQUEST from "@/store"
   export default {
     name: "Login",
     data() {
@@ -58,6 +58,7 @@
   .login input, button {
     border: 1px solid black;
     border-radius: 5px;
+    cursor: pointer;
   }
 
 </style>

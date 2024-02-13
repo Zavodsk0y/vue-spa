@@ -71,3 +71,21 @@ export const logoutRequest = () => {
             });
     })
 }
+
+export const getProductsRequest = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/products`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': `Bearer ${localStorage.getItem('myAppToken')}`
+            },
+        })
+            .then(response => response.json())
+            .then(result => resolve('SET_PRODUCTS', result.data))
+            .catch(error => {
+                resolve('AUTH_ERROR', '')
+                reject(error.message)
+            })
+    })
+}

@@ -16,6 +16,7 @@ export default {
   <div>
     <header>
       <article>
+        <h1>Home Page.</h1>
         <img src="../assets/logo.png" alt="logo">
       </article>
     </header>

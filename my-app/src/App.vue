@@ -5,6 +5,7 @@
     <router-link to="/login">Login</router-link>
     <router-link to="/signup">Signup</router-link>
     <router-link to="/logout">Logout</router-link>
+    <router-link to="/products">Products</router-link>
   </nav>
   <router-view/>
 </template>
@@ -20,6 +21,7 @@
 
 nav {
   padding: 30px;
+  gap: 5px;
 }
 
 nav a {
