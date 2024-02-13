@@ -81,8 +81,14 @@ export const getProductsRequest = () => {
                 'Authorization': `Bearer ${localStorage.getItem('myAppToken')}`
             },
         })
-            .then(response => response.json())
-            .then(result => resolve('SET_PRODUCTS', result.data))
+            .then(response => {
+                console.log(response)
+                return response.json()
+            })
+            .then(result => {
+                console.log(result)
+                resolve(result.data)
+            })
             .catch(error => {
                 resolve('AUTH_ERROR', '')
                 reject(error.message)

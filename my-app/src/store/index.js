@@ -33,6 +33,7 @@ export default createStore({
     },
     SET_PRODUCTS: (state, products) => {
         state.products = products
+        console.log(products)
     }
   },
   actions: {
@@ -84,7 +85,8 @@ export default createStore({
         return new Promise((resolve, reject) => {
             getProductsRequest()
                 .then(result => {
-                    commit('SET_PRODUCTS', result.data)
+                    console.log(result)
+                    commit('SET_PRODUCTS', result)
                     resolve()
                 })
                 .catch(error => {

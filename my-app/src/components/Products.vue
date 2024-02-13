@@ -10,7 +10,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getProducts'])
+    ...mapGetters(['getProducts']),
+    products() {
+      return this.getProducts
+    }
   },
   methods: {
   },
@@ -25,16 +28,31 @@ export default {
 
 <template>
   <section>
-    <article>
-      <div v-for="product in products" :key="product.id">
-        <span>Name: {{product.name}}</span>
-        <span>Description: {{product.description}}</span>
-      </div>
+    <article class="cards">
+        <div v-for="product in products" :key="product.id" class="card">
+            <p class="b-b">Name: {{product.name}}</p>
+            <p>Description: {{product.description}}</p>
+        </div>
     </article>
   </section>
 </template>
 
 <style scoped>
 
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 50px;
+  justify-items: center;
+}
+
+.card {
+  width: 300px;
+  border: 1px solid grey;
+}
+
+.b-b {
+  border-bottom: 1px solid black;
+}
 
 </style>
