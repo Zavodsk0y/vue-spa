@@ -6,10 +6,11 @@ import {toHandlerKey} from "vue";
 export default createStore({
   state: {
     token: localStorage.getItem('myAppToken') || '',
+      products: []
   },
   getters: {
     isAuthenticated: state => !!state.token,
-      getProducts: state => !!state.products,
+      getProducts: state => state.products
   },
   mutations: {
     AUTH_SUCCESS: (state, token) => {
@@ -82,9 +83,11 @@ export default createStore({
     GET_PRODUCTS_REQUEST: ({commit}) => {
         return new Promise((resolve, reject) => {
             getProductsRequest()
-                .then(result => commit('SET_PRODUCTS', result.data))
+                .then(result => {
+                    commit('SET_PRODUCTS', result.data)
+                    resolve()
+                })
                 .catch(error => {
-                    commit('AUTH_ERROR', '')
                     reject(error.message)
                 })
         })

@@ -1,6 +1,7 @@
 <script>
 import store from "@/store";
 import AUTH_REQUEST from "@/store"
+import {mapGetters} from "vuex";
 export default {
   name: "Products",
   data() {
@@ -8,12 +9,16 @@ export default {
       products: []
     }
   },
+  computed: {
+    ...mapGetters(['getProducts'])
+  },
   methods: {
   },
   mounted() {
-    this.$store
-        .dispatch('GET_PRODUCTS_REQUEST')
-    this.products = this.$store.getters.SET_PRODUCTS
+    this.$store.dispatch('GET_PRODUCTS_REQUEST')
+        .catch(error => {
+          console.error('Failed to fetch', error)
+        })
   }
 }
 </script>
