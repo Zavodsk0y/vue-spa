@@ -65,7 +65,6 @@ const routes = [
     path: '/products',
     name: 'products',
     component: ProductsView,
-    beforeEnter: ifAuthenticated
   }
 ]
 
