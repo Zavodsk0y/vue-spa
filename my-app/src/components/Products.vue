@@ -2,7 +2,7 @@
 import store from "@/store";
 import AUTH_REQUEST from "@/store"
 export default {
-  name: "Login",
+  name: "Products",
   data() {
     return {
       products: []
