@@ -1,5 +1,12 @@
 import { createStore } from 'vuex'
-import {addProductToCartRequest, getCartRequest, getProductsRequest, loginRequest, logoutRequest} from "@/utils/api";
+import {
+    addProductToCartRequest,
+    getCartRequest,
+    getProductsRequest,
+    loginRequest,
+    logoutRequest,
+    removeProductFromCartRequest
+} from "@/utils/api";
 import { signupRequest } from "@/utils/api";
 
 export default createStore({
@@ -43,6 +50,10 @@ export default createStore({
     GET_CART_SUCCESS: (state, cartProducts) => {
         state.cartProducts = cartProducts
         console.log(cartProducts)
+    },
+    REMOVE_CART_PRODUCT: (state, cartProducts) => {
+        const i = state.cartProducts.map(item => item.id).indexOf(cartProducts)
+        state.cartProducts.splice(i, 1)
     }
   },
   actions: {
@@ -105,10 +116,10 @@ export default createStore({
     ADD_PRODUCT_REQUEST: ({commit}) => {
         return new Promise((resolve, reject) => {
             addProductToCartRequest()
-                .then(cartProducts => {
-                    commit('SET_CARD_PRODUCT', cartProducts)
-                    localStorage.setItem('cartProducts', JSON.stringify(cartProducts))
-                    resolve(cartProducts)
+                .then(result => {
+                    commit('SET_CARD_PRODUCT', result)
+                    localStorage.setItem('cartProducts', JSON.stringify(result))
+                    resolve(result)
                 })
                 .catch(error => {
                     reject(error.message)
@@ -125,6 +136,19 @@ export default createStore({
                 })
                 .catch(error => {
                     reject(error.shortMessage)
+                })
+        })
+    },
+    REMOVE_FROM_CART_REQUEST: ({commit}, product) => {
+        return new Promise((resolve, reject) => {
+            removeProductFromCartRequest()
+                .then(result => {
+                    console.log(result)
+                    commit('REMOVE_CART_PRODUCT', product.id)
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error.message)
                 })
         })
     }

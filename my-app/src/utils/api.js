@@ -138,3 +138,25 @@ export const getCartRequest = () => {
     })
 }
 
+export const removeProductFromCartRequest = (token, productId) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/cart/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': `Bearer ${localStorage.getItem('myAppToken')}`
+            },
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(result => {
+                console.log(result)
+                resolve(result.data)
+            })
+            .catch(error => {
+                reject(error.message)
+            })
+    })
+}
+

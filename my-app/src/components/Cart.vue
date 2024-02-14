@@ -1,5 +1,6 @@
 <script>
 import {mapGetters} from "vuex";
+import {removeProductFromCartRequest} from "@/utils/api";
 
 export default {
   name: "Cart",
@@ -13,6 +14,13 @@ export default {
     },
   },
   methods: {
+    removeProductFromCartRequest,
+    leaseCart() {
+      this.$store.dispatch('GET_CART_REQUEST')
+          .catch(error => {
+            console.error('Failed to fetch', error)
+          })
+    }
   },
   mounted() {
     this.$store.dispatch('GET_CART_REQUEST')
@@ -31,6 +39,9 @@ export default {
         <p class="b-b">{{ product.name }}</p>
         <p>{{ product.description }}</p>
         <p>{{ product.price }} &euro;</p>
+        <button v-if="this.$store.getters.isAuthenticated"
+                v-on:click="removeProductFromCartRequest(this.$store.token, product.id)" @click="leaseCart" >Удалить из корзины
+        </button>
       </div>
     </article>
   </section>
