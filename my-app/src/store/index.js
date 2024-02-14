@@ -1,7 +1,6 @@
 import { createStore } from 'vuex'
 import {addProductToCartRequest, getCartRequest, getProductsRequest, loginRequest, logoutRequest} from "@/utils/api";
 import { signupRequest } from "@/utils/api";
-import {toHandlerKey} from "vue";
 
 export default createStore({
   state: {
