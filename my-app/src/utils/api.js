@@ -82,7 +82,28 @@ export const getProductsRequest = () => {
             },
         })
             .then(response => {
-                console.log(response)
+                return response.json()
+            })
+            .then(result => {
+                resolve(result.data)
+            })
+            .catch(error => {
+                resolve('AUTH_ERROR', '')
+                reject(error.message)
+            })
+    })
+}
+
+export const addProductToCartRequest = (token, productId) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/cart/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': `Bearer ${localStorage.getItem('myAppToken')}`
+            },
+        })
+            .then(response => {
                 return response.json()
             })
             .then(result => {
@@ -90,7 +111,6 @@ export const getProductsRequest = () => {
                 resolve(result.data)
             })
             .catch(error => {
-                resolve('AUTH_ERROR', '')
                 reject(error.message)
             })
     })

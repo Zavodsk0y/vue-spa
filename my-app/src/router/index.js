@@ -65,7 +65,9 @@ const routes = [
     path: '/products',
     name: 'products',
     component: ProductsView,
-  }
+  },
+  {
+  },
 ]
 
 const router = createRouter({

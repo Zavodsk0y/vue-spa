@@ -1,12 +1,13 @@
 import { createStore } from 'vuex'
-import {getProductsRequest, loginRequest, logoutRequest} from "@/utils/api";
+import {addProductToCartRequest, getProductsRequest, loginRequest, logoutRequest} from "@/utils/api";
 import { signupRequest } from "@/utils/api";
 import {toHandlerKey} from "vue";
 
 export default createStore({
   state: {
     token: localStorage.getItem('myAppToken') || '',
-      products: []
+      products: [],
+      cartProducts: [],
   },
   getters: {
     isAuthenticated: state => !!state.token,
@@ -34,6 +35,10 @@ export default createStore({
     SET_PRODUCTS: (state, products) => {
         state.products = products
         console.log(products)
+    },
+    SET_CARD_PRODUCT: (state, cartProducts) => {
+        state.cartProducts = cartProducts
+        console.log(cartProducts)
     }
   },
   actions: {
@@ -88,6 +93,19 @@ export default createStore({
                     console.log(result)
                     commit('SET_PRODUCTS', result)
                     resolve()
+                })
+                .catch(error => {
+                    reject(error.message)
+                })
+        })
+    },
+    ADD_PRODUCT_REQUEST: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            addProductToCartRequest()
+                .then(cartProducts => {
+                    commit('SET_CARD_PRODUCT', cartProducts)
+                    localStorage.setItem('cartProducts', JSON.stringify(cartProducts))
+                    resolve(cartProducts)
                 })
                 .catch(error => {
                     reject(error.message)
