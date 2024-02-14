@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import {addProductToCartRequest, getProductsRequest, loginRequest, logoutRequest} from "@/utils/api";
+import {addProductToCartRequest, getCartRequest, getProductsRequest, loginRequest, logoutRequest} from "@/utils/api";
 import { signupRequest } from "@/utils/api";
 import {toHandlerKey} from "vue";
 
@@ -11,7 +11,8 @@ export default createStore({
   },
   getters: {
     isAuthenticated: state => !!state.token,
-      getProducts: state => state.products
+      getProducts: state => state.products,
+      getCart: state => state.cartProducts
   },
   mutations: {
     AUTH_SUCCESS: (state, token) => {
@@ -37,6 +38,10 @@ export default createStore({
         console.log(products)
     },
     SET_CARD_PRODUCT: (state, cartProducts) => {
+        state.cartProducts = cartProducts
+        console.log(cartProducts)
+    },
+    GET_CART_SUCCESS: (state, cartProducts) => {
         state.cartProducts = cartProducts
         console.log(cartProducts)
     }
@@ -90,7 +95,6 @@ export default createStore({
         return new Promise((resolve, reject) => {
             getProductsRequest()
                 .then(result => {
-                    console.log(result)
                     commit('SET_PRODUCTS', result)
                     resolve()
                 })
@@ -109,6 +113,19 @@ export default createStore({
                 })
                 .catch(error => {
                     reject(error.message)
+                })
+        })
+    },
+    GET_CART_REQUEST: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            getCartRequest()
+                .then(result => {
+                    console.log(result)
+                    commit('GET_CART_SUCCESS', result)
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error.shortMessage)
                 })
         })
     }

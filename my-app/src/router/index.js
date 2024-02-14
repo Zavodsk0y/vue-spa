@@ -9,6 +9,7 @@ import LoginView from "@/views/LoginView.vue";
 import SignupView from "@/views/SignupView.vue";
 import LogoutView from "@/views/LogoutView.vue";
 import ProductsView from "@/views/ProductsView.vue";
+import CartView from "@/views/CartView.vue";
 
 
 const ifNotAuthenticated = (to, from, next) => {
@@ -67,6 +68,9 @@ const routes = [
     component: ProductsView,
   },
   {
+    path: '/cart',
+    name: 'cart',
+    component: CartView,
   },
 ]
 

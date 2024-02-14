@@ -5,7 +5,8 @@
     <router-link to="/login" v-if="!this.$store.getters.isAuthenticated">Login | </router-link>
     <router-link to="/signup" v-if="!this.$store.getters.isAuthenticated">Signup | </router-link>
     <router-link to="/logout" v-if="this.$store.getters.isAuthenticated">Logout | </router-link>
-    <router-link to="/products">Products</router-link>
+    <router-link to="/products">Products | </router-link>
+    <router-link to="/cart" v-if="this.$store.getters.isAuthenticated">Cart</router-link>
   </nav>
   <router-view/>
 </template>
@@ -32,3 +33,5 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
+<script setup>
+</script>

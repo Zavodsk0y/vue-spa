@@ -115,3 +115,26 @@ export const addProductToCartRequest = (token, productId) => {
             })
     })
 }
+
+export const getCartRequest = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/cart`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': `Bearer ${localStorage.getItem('myAppToken')}`
+            },
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(result => {
+                resolve(result.data)
+            })
+            .catch(error => {
+                resolve('AUTH_ERROR', '')
+                reject(error.message)
+            })
+    })
+}
+
