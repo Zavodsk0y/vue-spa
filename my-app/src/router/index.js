@@ -18,7 +18,7 @@ const ifNotAuthenticated = (to, from, next) => {
     next();
     return;
   }
-  next('/');
+  next('/products');
 }
 
 const ifAuthenticated = (to, from, next) => {
@@ -33,8 +33,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
-    beforeEnter: ifAuthenticated,
+    component: ProductsView,
   },
   {
     path: '/about',
@@ -75,7 +74,7 @@ const routes = [
   },
   {
     path: '/order',
-    name: 'orders',
+    name: 'order',
     component: OrderView,
   },
 ]

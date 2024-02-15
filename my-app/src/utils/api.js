@@ -181,7 +181,10 @@ export const getOrdersRequest = () => {
             },
         })
             .then(response => {
-                resolve()
+                return response.json()
+            })
+            .then(result => {
+                resolve(result.data)
             })
             .catch(error => {
                 reject(error.message)

@@ -8,7 +8,6 @@ import {
     removeProductFromCartRequest
 } from "@/utils/api";
 import { signupRequest } from "@/utils/api";
-import cart from "@/components/Cart.vue";
 
 export default createStore({
   state: {
