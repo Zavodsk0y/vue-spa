@@ -13,7 +13,7 @@ export default createStore({
   state: {
     token: localStorage.getItem('myAppToken') || '',
       products: [],
-      cartProducts: []
+      cartProducts: [],
   },
   getters: {
     isAuthenticated: state => !!state.token,
@@ -45,17 +45,8 @@ export default createStore({
     },
     SET_CARD_PRODUCT: (state, cartProducts) => {
         state.cartProducts = cartProducts
-        localStorage.setItem('cartProducts', JSON.stringify(cartProducts))
-    },
-    GET_CART_SUCCESS: (state, cartProducts) => {
-        state.cartProducts = cartProducts
         console.log(cartProducts)
     },
-    REMOVE_CART_PRODUCT: (state, productId) => {
-        const index = state.cartProducts.findIndex(item => item.id === productId)
-        state.cartProducts.splice(index, 1)
-        localStorage.setItem('cartProducts', JSON.stringify(state.cartProducts))
-    }
   },
   actions: {
     AUTH_REQUEST: ({commit}, user) => {
@@ -127,32 +118,6 @@ export default createStore({
                 })
         })
     },
-    GET_CART_REQUEST: ({commit}) => {
-        return new Promise((resolve, reject) => {
-            getCartRequest()
-                .then((cartProducts) => {
-                    commit('GET_CART_SUCCESS', cartProducts);
-                    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
-                    resolve();
-                })
-                .catch(error => {
-                    reject(error.shortMessage)
-                })
-        })
-    },
-    REMOVE_FROM_CART_REQUEST: ({commit}, productId) => {
-        return new Promise((resolve, reject) => {
-            removeProductFromCartRequest(productId)
-                .then(result => {
-                    commit('REMOVE_CART_PRODUCT', productId)
-                    resolve()
-                })
-                .catch(error => {
-                    reject(error.message)
-                })
-        })
-    }
-
   },
   modules: {
   }
