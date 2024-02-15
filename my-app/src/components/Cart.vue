@@ -16,10 +16,7 @@ export default {
   methods: {
     removeProductFromCartRequest,
     leaseCart() {
-      this.$store.dispatch('GET_CART_REQUEST')
-          .catch(error => {
-            console.error('Failed to fetch', error)
-          })
+
     }
   },
   mounted() {
@@ -27,7 +24,7 @@ export default {
         .catch(error => {
           console.error('Failed to fetch', error)
         })
-  }
+  },
 }
 </script>
 
@@ -40,7 +37,7 @@ export default {
         <p>{{ product.description }}</p>
         <p>{{ product.price }} &euro;</p>
         <button v-if="this.$store.getters.isAuthenticated"
-                v-on:click="removeProductFromCartRequest(this.$store.token, product.id)" @click="leaseCart" >Удалить из корзины
+                v-on:click="removeProductFromCartRequest(this.$store.token, product.id)" >Удалить из корзины
         </button>
       </div>
     </article>

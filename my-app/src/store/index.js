@@ -13,7 +13,7 @@ export default createStore({
   state: {
     token: localStorage.getItem('myAppToken') || '',
       products: [],
-      cartProducts: [],
+      cartProducts: JSON.parse(localStorage.getItem('cartProducts') || ''),
   },
   getters: {
     isAuthenticated: state => !!state.token,
@@ -129,10 +129,10 @@ export default createStore({
     GET_CART_REQUEST: ({commit}) => {
         return new Promise((resolve, reject) => {
             getCartRequest()
-                .then(result => {
-                    console.log(result)
-                    commit('GET_CART_SUCCESS', result)
-                    resolve()
+                .then((cartProducts) => {
+                    commit('AUTH_SUCCESS', cartProducts);
+                    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+                    resolve();
                 })
                 .catch(error => {
                     reject(error.shortMessage)
