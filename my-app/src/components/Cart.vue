@@ -8,13 +8,21 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['getCart']),
+    ...mapGetters(['getCart', 'isAuthenticated']),
     cart() {
       return this.getCart
     },
   },
   methods: {
-    removeProductFromCartRequest,
+    removeProductFromCartRequest(productId) {
+      this.$store.dispatch('REMOVE_FROM_CART_REQUEST', productId)
+          .then(() => {
+            console.log('Success')
+          })
+          .catch(error => {
+            console.log((error))
+          })
+    },
     leaseCart() {
 
     }
@@ -37,7 +45,7 @@ export default {
         <p>{{ product.description }}</p>
         <p>{{ product.price }} &euro;</p>
         <button v-if="this.$store.getters.isAuthenticated"
-                v-on:click="removeProductFromCartRequest(this.$store.token, product.id)" >Удалить из корзины
+                v-on:click="removeProductFromCartRequest(product.id)" >Удалить из корзины
         </button>
       </div>
     </article>

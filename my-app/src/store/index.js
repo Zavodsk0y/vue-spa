@@ -46,15 +46,14 @@ export default createStore({
     SET_CARD_PRODUCT: (state, cartProducts) => {
         state.cartProducts = cartProducts
         localStorage.setItem('cartProducts', JSON.stringify(cartProducts))
-        console.log(cartProducts)
     },
     GET_CART_SUCCESS: (state, cartProducts) => {
         state.cartProducts = cartProducts
         console.log(cartProducts)
     },
     REMOVE_CART_PRODUCT: (state, productId) => {
-        const i = state.cartProducts.map(item => item.id === productId)
-        state.cartProducts.splice(i, 1)
+        const index = state.cartProducts.findIndex(item => item.id === productId)
+        state.cartProducts.splice(index, 1)
         localStorage.setItem('cartProducts', JSON.stringify(state.cartProducts))
     }
   },
@@ -141,13 +140,11 @@ export default createStore({
                 })
         })
     },
-    REMOVE_FROM_CART_REQUEST: ({commit}, product) => {
+    REMOVE_FROM_CART_REQUEST: ({commit}, productId) => {
         return new Promise((resolve, reject) => {
-            removeProductFromCartRequest()
+            removeProductFromCartRequest(productId)
                 .then(result => {
-                    console.log(result)
-                    commit('REMOVE_CART_PRODUCT', product.id)
-                    commit('GET_CART_SUCCESS')
+                    commit('REMOVE_CART_PRODUCT', productId)
                     resolve()
                 })
                 .catch(error => {
