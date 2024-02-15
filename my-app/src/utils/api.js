@@ -155,3 +155,39 @@ export const removeProductFromCartRequest = (productId) => {
     })
 }
 
+export const performOrderRequest = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/order`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('myAppToken')}`
+            },
+        })
+            .then(response => {
+                resolve()
+            })
+            .catch(error => {
+                reject(error.message)
+            })
+    })
+}
+
+export const getOrdersRequest = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/order`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('myAppToken')}`
+            },
+        })
+            .then(response => {
+                resolve()
+            })
+            .catch(error => {
+                reject(error.message)
+            })
+    })
+}
+
+
+

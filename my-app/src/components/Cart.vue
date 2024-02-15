@@ -22,6 +22,15 @@ export default {
           .catch(error => {
             console.log(error.message)
           })
+    },
+    performOrder() {
+      this.$store.dispatch('PERFORM_ORDER_REQUEST')
+          .then(() => {
+            console.log('Order has performed successful')
+          })
+          .catch(error => {
+            console.log(error.message)
+          })
     }
   },
   mounted() {
@@ -49,6 +58,7 @@ export default {
         </button>
       </div>
     </article>
+    <button v-if="cart.length !== 0" v-on:click="performOrder" class="orderButton">Оформить заказ</button>
   </section>
 </template>
 
@@ -87,6 +97,18 @@ button {
 
 .b-b {
   border-bottom: 1px solid black;
+}
+
+.orderButton {
+  width: 225px;
+  height: 80px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 18px;
+}
+
+.orderButton:hover {
+  background: #42b983;
 }
 
 </style>

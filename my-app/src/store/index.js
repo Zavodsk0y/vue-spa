@@ -1,10 +1,10 @@
 import { createStore } from 'vuex'
 import {
     addProductToCartRequest,
-    getCartRequest,
+    getCartRequest, getOrdersRequest,
     getProductsRequest,
     loginRequest,
-    logoutRequest,
+    logoutRequest, performOrderRequest,
     removeProductFromCartRequest
 } from "@/utils/api";
 import { signupRequest } from "@/utils/api";
@@ -15,11 +15,13 @@ export default createStore({
     token: localStorage.getItem('myAppToken') || '',
       products: [],
       cartProducts: [],
+      orders: []
   },
   getters: {
     isAuthenticated: state => !!state.token,
       getProducts: state => state.products,
-      getCart: state => state.cartProducts
+      getCart: state => state.cartProducts,
+      getOrders: state => state.orders,
   },
   mutations: {
     AUTH_SUCCESS: (state, token) => {
@@ -49,6 +51,9 @@ export default createStore({
     },
     REMOVE_PRODUCT_FROM_CART: (state, productId) => {
         state.cartProducts = state.cartProducts.filter(product => product.id !== productId)
+    },
+    SET_ORDERS: (state, orders) => {
+        state.orders = orders
     }
   },
   actions: {
@@ -138,6 +143,30 @@ export default createStore({
             removeProductFromCartRequest(productId)
                 .then(() => {
                     commit('REMOVE_PRODUCT_FROM_CART', productId)
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error.message)
+                })
+        })
+    },
+    PERFORM_ORDER_REQUEST: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            performOrderRequest()
+                .then(() => {
+                    commit()
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error.message)
+                })
+        })
+    },
+    GET_ORDERS_REQUEST: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            getOrdersRequest()
+                .then((orders) => {
+                    commit('SET_ORDERS', orders)
                     resolve()
                 })
                 .catch(error => {

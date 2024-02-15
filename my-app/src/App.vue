@@ -6,7 +6,8 @@
     <router-link to="/signup" v-if="!this.$store.getters.isAuthenticated">Signup | </router-link>
     <router-link to="/logout" v-if="this.$store.getters.isAuthenticated">Logout | </router-link>
     <router-link to="/products">Products | </router-link>
-    <router-link to="/cart" v-if="this.$store.getters.isAuthenticated">Cart</router-link>
+    <router-link to="/cart" v-if="this.$store.getters.isAuthenticated">Cart | </router-link>
+    <router-link to="/order" v-if="this.$store.getters.isAuthenticated">Orders</router-link>
   </nav>
   <router-view/>
 </template>
