@@ -13,7 +13,7 @@ export default createStore({
   state: {
     token: localStorage.getItem('myAppToken') || '',
       products: [],
-      cartProducts: JSON.parse(localStorage.getItem('cartProducts') || ''),
+      cartProducts: []
   },
   getters: {
     isAuthenticated: state => !!state.token,
@@ -45,15 +45,17 @@ export default createStore({
     },
     SET_CARD_PRODUCT: (state, cartProducts) => {
         state.cartProducts = cartProducts
+        localStorage.setItem('cartProducts', JSON.stringify(cartProducts))
         console.log(cartProducts)
     },
     GET_CART_SUCCESS: (state, cartProducts) => {
         state.cartProducts = cartProducts
         console.log(cartProducts)
     },
-    REMOVE_CART_PRODUCT: (state, cartProducts) => {
-        const i = state.cartProducts.map(item => item.id).indexOf(cartProducts)
+    REMOVE_CART_PRODUCT: (state, productId) => {
+        const i = state.cartProducts.map(item => item.id === productId)
         state.cartProducts.splice(i, 1)
+        localStorage.setItem('cartProducts', JSON.stringify(state.cartProducts))
     }
   },
   actions: {
@@ -130,7 +132,7 @@ export default createStore({
         return new Promise((resolve, reject) => {
             getCartRequest()
                 .then((cartProducts) => {
-                    commit('AUTH_SUCCESS', cartProducts);
+                    commit('GET_CART_SUCCESS', cartProducts);
                     localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
                     resolve();
                 })
@@ -145,6 +147,7 @@ export default createStore({
                 .then(result => {
                     console.log(result)
                     commit('REMOVE_CART_PRODUCT', product.id)
+                    commit('GET_CART_SUCCESS')
                     resolve()
                 })
                 .catch(error => {
