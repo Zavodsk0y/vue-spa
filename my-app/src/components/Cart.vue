@@ -14,15 +14,23 @@ export default {
     },
   },
   methods: {
-    removeProductFromCartRequest,
-    leaseCart() {
-
+    removeFromCart(productId) {
+      this.$store.dispatch('REMOVE_PRODUCT_FROM_CART_REQUEST', productId)
+          .then(() => {
+            console.log('Success')
+          })
+          .catch(error => {
+            console.log(error.message)
+          })
     }
   },
   mounted() {
     this.$store.dispatch('GET_CART_REQUEST')
+        .then(() => {
+          console.log('Cart is success')
+        })
         .catch(error => {
-          console.error('Failed to fetch', error)
+          console.log(error.message)
         })
   },
 }
@@ -37,7 +45,7 @@ export default {
         <p>{{ product.description }}</p>
         <p>{{ product.price }} &euro;</p>
         <button v-if="this.$store.getters.isAuthenticated"
-                v-on:click="removeProductFromCartRequest(this.$store.token, product.id)" >Удалить из корзины
+                v-on:click="removeFromCart(product.id)" >Удалить из корзины
         </button>
       </div>
     </article>

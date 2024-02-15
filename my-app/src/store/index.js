@@ -8,6 +8,7 @@ import {
     removeProductFromCartRequest
 } from "@/utils/api";
 import { signupRequest } from "@/utils/api";
+import cart from "@/components/Cart.vue";
 
 export default createStore({
   state: {
@@ -43,10 +44,12 @@ export default createStore({
         state.products = products
         console.log(products)
     },
-    SET_CARD_PRODUCT: (state, cartProducts) => {
+    SET_CART_PRODUCTS: (state, cartProducts) => {
         state.cartProducts = cartProducts
-        console.log(cartProducts)
     },
+    REMOVE_PRODUCT_FROM_CART: (state, productId) => {
+        state.cartProducts = state.cartProducts.filter(product => product.id !== productId)
+    }
   },
   actions: {
     AUTH_REQUEST: ({commit}, user) => {
@@ -118,6 +121,30 @@ export default createStore({
                 })
         })
     },
+    GET_CART_REQUEST: ({commit}) => {
+        return new Promise((resolve, reject) => {
+            getCartRequest()
+                .then(cartProducts => {
+                    commit('SET_CART_PRODUCTS', cartProducts)
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error.message)
+                })
+        })
+    },
+    REMOVE_PRODUCT_FROM_CART_REQUEST: ({commit}, productId) => {
+        return new Promise((resolve, reject) => {
+            removeProductFromCartRequest(productId)
+                .then(() => {
+                    commit('REMOVE_PRODUCT_FROM_CART', productId)
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error.message)
+                })
+        })
+    }
   },
   modules: {
   }

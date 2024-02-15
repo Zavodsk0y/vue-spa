@@ -132,13 +132,12 @@ export const getCartRequest = () => {
                 resolve(result.data)
             })
             .catch(error => {
-                resolve('AUTH_ERROR', '')
                 reject(error.message)
             })
     })
 }
 
-export const removeProductFromCartRequest = (token, productId) => {
+export const removeProductFromCartRequest = (productId) => {
     return new Promise((resolve, reject) => {
         fetch(`${API}/cart/${productId}`, {
             method: 'DELETE',
@@ -148,11 +147,7 @@ export const removeProductFromCartRequest = (token, productId) => {
             },
         })
             .then(response => {
-                return response.json()
-            })
-            .then(result => {
-                console.log(result)
-                resolve(result.data)
+                resolve()
             })
             .catch(error => {
                 reject(error.message)
